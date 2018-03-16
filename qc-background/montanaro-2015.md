@@ -1,5 +1,5 @@
 
-# (Quantum algorithms: an overview)[https://arxiv.org/pdf/1511.04206.pdf]
+# [Quantum algorithms: an overview](https://arxiv.org/pdf/1511.04206.pdf)
 
 TLDR: Quantum computers are designed to be faster than classical computers.
 
@@ -22,7 +22,7 @@ QMA is larger than NP, BQP is larger than BPP.
     - Shor's algorithm gives faster integer factorisation
 2. Search and optimisation
     - Grover's algorithm solves unstructured search problem faster than in classical case
-    - Given a function $f: {0, 1}^n$ -> ${0, 1}$ find x such that $f(x) = 1$, can be solved in $O(\sqrt(N))$ instead of $O(N)$ where $N = 2^n$
+    - Given a function $f: \{0, 1\}^n$ -> $\{0, 1\}$ find x such that $f(x) = 1$, can be solved in $O(\sqrt(N))$ instead of $O(N)$ where $N = 2^n$
 3. Adiabatic optimisation
     - Use adiabatic theorem in quantum mechanics to constrain ground state over some solution set until we have satisfied all constraints
     - Adiabatic Theorem: states that if conditions are changed slowly enough, the state of a system will remain in a similar eigenstate under a new Hamiltonian
