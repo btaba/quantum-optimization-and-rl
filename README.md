@@ -1,0 +1,1 @@
+Notes on intersection of Quantum Computing and Optimization, and maybe RL if I get to it
