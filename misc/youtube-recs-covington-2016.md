@@ -1,5 +1,5 @@
 
-(Deep Neural Nets for Youtube Recommendation)[https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45530.pdf]
+[Deep Neural Nets for Youtube Recommendation](https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45530.pdf)
 
 They do 2-stage recommendations. First they generate video candidates with high recall, then they rank those candidates.
 
