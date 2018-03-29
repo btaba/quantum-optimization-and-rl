@@ -12,6 +12,6 @@ They come up with gender specific words (brother, sister, man, woman), and gende
 To get gender sub-space vector. Take definitional gender words (man/woman, brother/sister). Center each pair. Do PCA on all the gender pair vectors, take the first principal component [link](https://github.com/tolga-b/debiaswe/blob/master/debiaswe/we.py#L235).
 
 
-For all words **not** in the gender specific set (e.g. brother, sister, businesswoman, businessman), drop the vectors onto the gender subspace (u - v * u.dot(v) / v.dot(v)). [see here](https://github.com/tolga-b/debiaswe/blob/master/debiaswe/debias.py#L24). This ensures that gender neutral words have no cosine similarity to the gender subspace.
+For all words **not** in the gender specific set (e.g. **not** brother, sister, businesswoman, businessman), drop the vectors onto the gender subspace (u - v * u.dot(v) / v.dot(v)). [see here](https://github.com/tolga-b/debiaswe/blob/master/debiaswe/debias.py#L24). This ensures that gender neutral words have no cosine similarity to the gender subspace.
 
 For all equality sets (e.g. (brother, sister), (man, woman)), we need them to be equidistant from the center of the gender subspace. We do this by dropping the midpoint of the equality set vectors onto the gender subspace, and re-adding +/- the gender direction. [see here](https://github.com/tolga-b/debiaswe/blob/master/debiaswe/debias.py#L30)
