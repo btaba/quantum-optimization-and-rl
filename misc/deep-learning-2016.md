@@ -81,7 +81,7 @@ where c comes from a multinoulli distribution. c is called a **latent variable**
 
 ## Measure Theory
 
-Jacobian Matrix (J) is a matrix of partial derivatives. If y = g(x), we want to preserve |p(x)dx| = |p(g(x))dy|. This roughly generalizes to multiple dimensional spaces as such: p(x) = p(g(x)) det(J). 
+Jacobian Matrix (J) is a matrix of partial derivatives of a function. If y = g(x), we want to preserve |p(x)dx| = |p(g(x))dy|. This roughly generalizes to multiple dimensional spaces as such: p(x) = p(g(x)) det(J). 
 
 
 ## Information Theory
@@ -101,7 +101,7 @@ Jacobian Matrix (J) is a matrix of partial derivatives. If y = g(x), we want to 
 # Chapter 4 - Numerical Computation
 
 - Poor Conditioning: occurs when ratio of max and min eigenvalues are large. the matrix inversion becomes very sensitive to numeric instability.
-- Hessian Matrix: is the Jacobian of the gradient of a function f(x).
+- Hessian Matrix: is the Jacobian of the gradient of a function f(x), where f(x) maps a vector in Rn to a scalar in R. The gradient of the function is a vector in Rn, and the Jacobian of this vector is an NxN matrix which is the Hessian.
     - Used in Newton's method to compute gradients to minimize f(x). The Hessian matrix gives us curvature information to know which direction has a better acceleration of descent.
 - Lipschitz Continuous: a function is lipschitz continuous if for all x and y, |f(x) - f(y)| <= L |x - y|\_2. where L is a lipschitz constant.
 
@@ -121,8 +121,44 @@ For linear regression, maximizing the log probability is equivalent to minimizin
 
 # Chapter 6 - Deep Feedforward Networks
 
-...
+Backpropagation is basically multiplying Jacobians by gradients (using the chain rule of derivatives).
 
+# Chapter 8 - Optimization
+
+#### Momentum
+
+A velocity v accumulates gradients using momentum parameters. This velocity is used to update the model parameters.
+
+#### Nesterov Momentum
+
+Same as momentum, except the gradients are taken at the last model parameters + the last momentum.
+
+#### Adagrad
+
+Adapts learning rate of all parameters by scaling them inversely proportional to the square root of the sum of all the historical squared values of the gradient. Largest gradients decrease learning rate rapidly, and lower gradients decrease learning rate less rapidly.
+
+#### RMSProp
+
+Modifies Adagrad so that gradient accumulation is an exponential decaying average.
+
+#### Adam
+
+Combination of RMSProp and momentum.
+
+The choice of optimization algorithm is pretty much up to the user for familiarity with hyper-parameter tuning.
+
+#### Parameter Initialization
+
+DL is very sensitive to initialization, that's great!
+
+Glorot uniform: by sqrt(6 / (m + n)), with m inputs and n outputs - with the goal of initializing all layers to have similar gradient and activation variance.
+
+Or pretrain a network on some other task for transfer.
+
+
+#### Batch Normalization
+
+Scale each input to each layer by the mean and variance of the input to that layer. During training, we take the mean and variance of that batch. During test time, we use the mean and variance of the exponentially weighted averages of what we saw at train time.
 
 # Chapter 10 - Sequence Modeling: Recurrent and Recursive Nets
 
@@ -132,5 +168,33 @@ BPTT: back-propagation through time, used for recurrent networks with recurrent 
 
 Losses of the target and output predictions are usually cross-entropy loss (negative log likelihood), or MSE.
 
+### The Challenge of Long Term Dependencies
+
+Gradients propagated over many steps tend to vanish or explode. The forward pass is essentially a recurrence multiplying hidden states by the weight matrix. This is similar to raising the eigenvalues of the weight matrix to the number of timesteps. Deep neural nets avoid the vanishing/exploding gradients problem since each layer is a different weight matrix which can be initialized appropriately. Recurrent neural nets on the other hand are continually multiplied by the same matrix.
+
+The canonical way to tackle these long-term dependencies is to use gated RNNs, such as LSTMs or GRUs. The network learns to forget outputs from units it does not need.
+
+##### LSTM - Long Short Term Memory
+
+[colah's blog](http://colah.github.io/posts/2015-08-Understanding-LSTMs/)
+
+- forget gate: takes last hidden state and input, and outputs from sigmoid - decides which values we'll forget
+- input gate: takes last hidden state and input, and outputs from sigmoid - decides which part we'll update
+- candidate values: tanh of last hidden state and input
+
+- new-cell-state: old-cell-state X forget-gate + input-gate X candidate-values
+
+- output-gate: takes last hidden state and input, and outputs from sigmoid - decides which parts to output.
+- next hidden state: output-gate X tanh(new-cell-state)
+
+#### GRU - Gated Recurrent Unit
+
+- Difference from LSTM is that a single gating unit simultaneously controls the forgetting factor and the decision to update the state unit.
+- No significant variation empirically between LSTMs and GRUs on page 408.
+
+
+### Gradient Clipping
+
+You can either clip gradients elementwise, or clip gradients by dividing by the norm if the norm of the gradients exceeds a certain value. There are several other methods, which are mainly empirical.
 
 
