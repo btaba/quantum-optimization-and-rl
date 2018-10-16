@@ -15,7 +15,7 @@ Ax = b
 A norm is a distance measure that must satisfy these 3 properties:
 
 1. if f(x) = 0 then x = 0
-2. triangle inequality: f(x) + f(y) <= f(x) + f(y)
+2. triangle inequality: f(x + y) <= f(x) + f(y)
 3. for all a, f(ax) = |a|f(x)
 
 **L2 norm** is Euclidean norm. Max norm or **infinity norm** is just the absolute value of the largest value in the vector. **Frobenius norm** is just the square root of the sum of squares for all values in a matrix.
@@ -47,7 +47,7 @@ Product of all eigenvalues of a matrix.
 
 ## PCA
 
-Lossy linear compression of m points X, solved by taking getting top-k eigenvectors of X^T X corresponding to top-k eigenvalues - call this matrix D. The compression is c = D^T x, and the decompression is x = Dc.
+Lossy linear compression of m points X, solved by taking top-k eigenvectors of X^T X corresponding to top-k eigenvalues - call this matrix D. The compression is c = D^T x, and the decompression is x = Dc.
 
 # Chapter 3 - Probability
 
@@ -196,5 +196,3 @@ The canonical way to tackle these long-term dependencies is to use gated RNNs, s
 ### Gradient Clipping
 
 You can either clip gradients elementwise, or clip gradients by dividing by the norm if the norm of the gradients exceeds a certain value. There are several other methods, which are mainly empirical.
-
-
